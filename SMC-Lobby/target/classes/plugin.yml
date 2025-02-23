@@ -1,0 +1,12 @@
+name: SMC-Lobby
+version: '1.0'
+main: de.mika.sMCLobby.Main
+api-version: '1.21'
+authors: [ Mikstar_2133 ]
+website: https://discord.gg/suchtmc
+commands:
+  gm:
+    permission: lobby.command.gamemode.use
+  setspawn:
+    permission: lobby.command.setspawn.use
+  spawn:
