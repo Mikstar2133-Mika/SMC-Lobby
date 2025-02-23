@@ -20,12 +20,10 @@ public class DoubleJumpListener implements Listener {
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
 
-        // Überprüfe, ob der Spieler im Creative-Modus ist
         if (player.getGameMode().toString().equals("CREATIVE")) {
-            return; // Verhindert den Double Jump im Creative-Modus
+            return;
         }
 
-        // Verhindere den Flugmodus und aktiviere den Double Jump
         if (!player.getAllowFlight()) {
             return;
         }
@@ -33,10 +31,9 @@ public class DoubleJumpListener implements Listener {
         event.setCancelled(true);
         player.setAllowFlight(false);
 
-        // Boost nach vorne und oben
         Location location = player.getLocation();
         Vector direction = location.getDirection().normalize();
-        Vector boost = direction.multiply(2.3).setY(0.7); // 20 nach vorne, 5 nach oben angepasst
+        Vector boost = direction.multiply(2.3).setY(0.7);
         player.setVelocity(boost);
     }
 
@@ -44,7 +41,6 @@ public class DoubleJumpListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        // Erlaube Flugmodus bei Bodenkontakt, aber nur wenn nicht im Creative-Modus
         if (player.isOnGround() && !doubleJumpCooldown.contains(player) && !player.getGameMode().toString().equals("CREATIVE")) {
             player.setAllowFlight(true);
         }
@@ -52,7 +48,6 @@ public class DoubleJumpListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        // Entferne Spieler aus dem Cooldown beim Verlassen
         doubleJumpCooldown.remove(event.getPlayer());
     }
 }
